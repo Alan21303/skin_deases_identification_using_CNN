@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediction Result</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+    <style>
+      /* Custom styles for result page */
+      .img-preview {
+        width: 200px; /* Fixed width */
+        height: 200px; /* Fixed height */
+        object-fit: cover; /* Ensure the image fits within the dimensions */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-top: 20px;
+      }
+      .result-container {
+        width: 100%;
+        max-width: 800px; /* Increased width */
+        text-align: center; /* Center-align text */
+      }
+      .center-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(
+          100vh - 8rem
+        ); /* Full viewport height minus nav and footer height */
+      }
+      .action-button {
+        background-color: #4f46e5; /* Tailwind color */
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+      }
+      .action-button:hover {
+        background-color: #3b3b7f;
+      }
+    </style>
+  </head>
+  <body class="flex flex-col min-h-screen bg-gray-100 font-sans antialiased">
+    <!-- Nav bar-->
+    <nav class="bg-purple-600 p-4 text-white flex justify-between">
+      <div>
+        <h1 class="text-3xl font-bold">Skin Disease Classifier</h1>
+      </div>
+      <div>
+        <a href="/" class="text-white hover:underline">Back to Home</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex-grow container mx-auto mt-10 sm:px-0 center-content">
+      <div
+        class="result-container bg-white p-6 rounded-lg shadow-md flex flex-col items-center"
+      >
+        <!-- Display Prediction Result -->
+        <h2 class="text-xl font-semibold">Predicted Disease:</h2>
+        <p class="mt-2 text-lg">{{ prediction }}</p>
+        <!-- Display Image -->
+        <div class="mt-6">
+          <img
+            src="data:image/png;base64,{{ img_data }}"
+            alt="Uploaded Image"
+            class="img-preview"
+          />
+        </div>
+        <!-- Action Button -->
+        <a href="/" class="action-button">try another image</a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center p-4 text-black mt-6">
+      Developed by
+      <a
+        href="https://www.linkedin.com/in/alan-roy-2o24"
+        class="hover:text-blue-700 transition-colors"
+        >Group 4</a
+      >
+    </footer>
+  </body>
+</html>

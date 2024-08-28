@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skin Disease Classifier</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+    <style>
+      /* Custom styles for upload area and button */
+      .upload-area {
+        width: 100%;
+        height: 300px; /* Increased height for image display */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        background: #f9f9f9;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .upload-area:hover {
+        background: #e0e0e0;
+      }
+      .upload-button {
+        width: 100%;
+        height: 50px;
+        border: none;
+        background-color: #4f46e5; /* Tailwind color */
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+      }
+      .upload-button:hover {
+        background-color: #3b3b7f;
+      }
+      .img-preview {
+        width: 300px; /* Fixed width */
+        height: 300px; /* Fixed height */
+        object-fit: cover; /* Ensure the image covers the dimensions */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body class="flex flex-col min-h-screen bg-gray-100 font-sans antialiased">
+    <!-- Nav bar-->
+    <nav class="bg-purple-600 p-4 text-white flex justify-between">
+      <div>
+        <h1 class="text-3xl font-bold">Skin Disease Classifier</h1>
+      </div>
+      <div>
+        <a href="#" class="text-white hover:underline">Logout</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex-grow container mx-auto mt-10 sm:px-0">
+      <div
+        class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col items-center"
+      >
+        <!-- Form for file upload -->
+        <form
+          action="/predict"
+          method="POST"
+          enctype="multipart/form-data"
+          onsubmit="return validateForm()"
+        >
+          <label for="uploadFile" class="upload-area">
+            <img
+              id="previewImage"
+              class="img-preview hidden"
+              alt="Uploaded Image"
+            />
+            <svg
+              id="uploadIcon"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-12 mb-2 fill-gray-500"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
+              />
+              <path
+                d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
+              />
+            </svg>
+            <input
+              type="file"
+              id="uploadFile"
+              name="file"
+              class="hidden"
+              required
+              onchange="handleFileSelect(event)"
+            />
+          </label>
+          <!-- Upload Button -->
+          <button type="submit" class="upload-button mt-4">
+            Upload and Predict
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center p-4 text-black mt-6">
+      Developed by
+      <a
+        href="https://www.linkedin.com/in/alan-roy-2o24"
+        class="hover:text-blue-700 transition-colors"
+        >Group 4</a
+      >
+    </footer>
+
+    <!-- JavaScript for Image Preview -->
+    <script>
+      function handleFileSelect(event) {
+        const file = event.target.files[0];
+        const previewImage = document.getElementById("previewImage");
+        const uploadIcon = document.getElementById("uploadIcon");
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewImage.classList.remove("hidden"); // Show the image
+            uploadIcon.classList.add("hidden"); // Hide the SVG icon
+          };
+
+          reader.readAsDataURL(file);
+        } else {
+          previewImage.classList.add("hidden"); // Hide the image
+          uploadIcon.classList.remove("hidden"); // Show the SVG icon
+        }
+      }
+
+      function validateForm() {
+        const fileInput = document.getElementById("uploadFile");
+        if (!fileInput.files.length) {
+          alert("Please upload an image before submitting.");
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </body>
+</html>
